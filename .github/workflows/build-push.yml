@@ -1,15 +1,15 @@
 name: Build and Push Express App
 
 on:
- push:
-  branches:
-    - main
+  push:
+    branches:
+      - main
 
 jobs:
- build:
-  runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-  steps:
+    steps:
       - name: Checkout-repository
         uses: actions/checkout@v7
 
@@ -30,4 +30,6 @@ jobs:
           tags: ${{vars.DOCKERHUB_USERNAME}}/express-app:latest
       - name: Deploy to Render
         env: 
-          depoy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: | 
+          curl --fail "$deploy_url"
